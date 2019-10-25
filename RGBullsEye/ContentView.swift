@@ -24,22 +24,36 @@ struct ContentView: View {
                 }
                 VStack {
                     Color(red: rGuess, green: gGuess, blue: bGuess)
-                    Text("R: 127  G: 127  B: 127")
+                    Text("R: \(Int(rGuess * 255.0))"
+                        + " G: \(Int(gGuess * 255.0))"
+                        + " B: \(Int(bGuess * 255.0))")
                 }
             }
             Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/) {
-                Text(/*@START_MENU_TOKEN@*/"Button"/*@END_MENU_TOKEN@*/)
+                Text("Hit me!")
             }
-            Slider(value: .constant(0.5))
-            Slider(value: .constant(0.5))
-            Slider(value: .constant(0.5))
+            ColorSlider(value: $rGuess, textColor: .red)
+            ColorSlider(value: $gGuess, textColor: .green)
+            ColorSlider(value: $bGuess, textColor: .blue)
         }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(rGuess: 0.5, gGuess: 0.5, bGuess: 0.5)
+        ContentView(rGuess: 0.7, gGuess: 0.3, bGuess: 0.6)
             .previewLayout(.fixed(width: 568, height: 320))
+    }
+}
+
+struct ColorSlider: View {
+    @Binding var value: Double
+    var textColor: Color
+    var body: some View {
+        HStack {
+            Text("0").foregroundColor(textColor)
+            Slider(value: $value)
+            Text("255").foregroundColor(textColor)
+        }.padding(.horizontal)
     }
 }
